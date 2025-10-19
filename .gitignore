@@ -1,3 +1,7 @@
 .env
 
 secretAccountKey.json
+
+node_modules
+
+.vercel

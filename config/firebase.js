@@ -1,3 +1,5 @@
+// /config/firebase.js - MODIFICADO
+
 import admin from 'firebase-admin';
 import dotenv from 'dotenv';
 
@@ -7,14 +9,15 @@ let db;
 export const initializeFirebase = () => {
     try {
         if (admin.apps.length === 0) {
-            // Reemplazar saltos de línea para que funcione con Vercel/dotenv
-            const privateKey = process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n');
+            
+            // ⚠️ CÓDIGO CORREGIDO: Usamos la clave directamente.
+            const privateKey = process.env.FIREBASE_PRIVATE_KEY; 
 
             admin.initializeApp({
                 credential: admin.credential.cert({
                     projectId: process.env.FIREBASE_PROJECT_ID,
                     clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-                    privateKey: privateKey,
+                    privateKey: privateKey, // Aquí pasa la clave como está en Vercel
                 }),
             });
 
@@ -24,6 +27,8 @@ export const initializeFirebase = () => {
         console.error('Error al inicializar Firebase Admin SDK:', error);
     }
 };
+
+// ... el resto del archivo sigue igual
 
 export const getDb = () => {
     if (!db) {
